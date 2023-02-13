@@ -56,7 +56,7 @@ class Lotto extends Component {
   }
 
   componentWillUnmount() {
-    this.timeout.forEach((v) => {
+    this.timeouts.forEach((v) => {
       clearTineout(v);
     });
   }
