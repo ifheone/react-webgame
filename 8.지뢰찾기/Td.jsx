@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from "react";
+import React, { useCallback, useContext, memo } from "react";
 import {
   CODE,
   OPEN_CELL,
@@ -104,15 +104,27 @@ const Td = ({ rowIndex, cellIndex }) => {
     },
     [tableData[rowIndex][cellIndex], halted]
   );
+  console.log("td rendered");
   return (
-    <td
-      style={getTdStyle(tableData[rowIndex][cellIndex])}
-      onClick={onClickTd}
-      onContextMenu={onRightClickTd}
-    >
-      {getTdText(tableData[rowIndex][cellIndex])}
-    </td>
+    <RealTd
+      onClickTd={onClickTd}
+      onRightClickTd={onRightClickTd}
+      data={tableData[rowIndex][cellIndex]}
+    />
   );
 };
 
-export default Td;
+const RealTd = memo(({ onClickTd, onRightClickTd, data }) => {
+  console.log("real td rendered");
+  return (
+    <td
+      style={getTdStyle(data)}
+      onClick={onClickTd}
+      onContextMenu={onRightClickTd}
+    >
+      {getTdText(data)}
+    </td>
+  );
+});
+
+export default React.memo(Td);
